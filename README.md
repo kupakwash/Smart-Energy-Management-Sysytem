@@ -1,204 +1,215 @@
+# ⚡ Smart Energy Management System (SEMS)
+## 🌍 Phased AI-Driven Energy Intelligence for Data-Sparse Power Systems
 
-# Smart Energy Management System (SEMS)
-## Predictive Energy Analytics using Machine Learning
-
----
-
-## Executive Summary
-
-The **Smart Energy Management System (SEMS)** is an applied machine learning system designed to **model, predict, and analyze energy consumption patterns** using structured historical data.
-
-Rather than treating energy forecasting as a narrow regression exercise, this project is engineered as a **decision-support system** for sustainable energy planning. It integrates **data engineering, synthetic data augmentation, gradient-boosted learning (LightGBM), and interpretability-driven analysis** to reflect real-world energy-sector constraints.
-
-The system prioritizes **robustness, transparency, and deployability**, making it suitable for utility-scale analytics, smart energy systems, and sustainability-driven policy environments.
+> **Research-Backed | Deployment-Oriented | Sustainability-Focused AI System**  
+> 🎓 Graduate Research Project – M.Tech (Artificial Intelligence & Machine Learning)  
+> ♻️ Aligned with UN SDG-7: Affordable & Clean Energy  
 
 ---
 
-## 1. Problem Context
+## 📌 1. Introduction & Context
 
-Energy systems increasingly face:
+Energy systems across the Global South, particularly in **Sub-Saharan Africa**, face a paradox:
+- Energy demand is increasing rapidly
+- Infrastructure modernization lags behind
+- Smart meters and IoT devices are not universally deployed
+- Most households rely on **prepaid electricity meters**
 
-- Rapid growth in consumption demand  
-- Limited generation and transmission capacity  
-- Inefficient end-user behavior  
-- Reactive, rule-based planning mechanisms  
+Conventional “smart grid” solutions assume **dense, real-time telemetry**, making them unsuitable for these environments.
 
-Traditional energy forecasting relies on historical averages and static heuristics, which fail to capture:
+The **Smart Energy Management System (SEMS)** is designed specifically for such **data-sparse, infrastructure-constrained contexts**, offering an AI-driven pathway from **basic prepaid analytics** to **fully autonomous energy optimization**.
 
-- Non-linear demand dynamics  
-- Temporal consumption variability  
-- User-level heterogeneity  
-
-This results in poor predictive performance and limited support for proactive energy planning.
-
-SEMS addresses this gap by introducing **predictive intelligence** through supervised machine learning.
+This repository implements **Phase 1** of SEMS as a working system while grounding its design in a broader **three-phase research architecture**.
 
 ---
 
-## 2. Project Objective
+## 🎯 2. Research Problem Statement
 
-The objective of SEMS is not simply to predict energy values, but to construct a pipeline that:
+The core research question addressed is:
 
-- Converts raw energy records into meaningful predictive features  
-- Generalizes under limited, noisy, or incomplete data  
-- Preserves interpretability for operational and regulatory trust  
-- Can evolve into real-time or policy-aware energy systems  
+> *How can machine learning be used to deliver actionable energy intelligence in environments where high-frequency consumption data and smart infrastructure are unavailable?*
 
-This design philosophy mirrors production energy analytics rather than academic benchmarks.
+### Key Constraints Addressed
+- Lack of household-level time-series data  
+- Prepaid-only consumption visibility  
+- Privacy and regulatory limitations  
+- Heterogeneous user behavior  
+
+SEMS reframes these constraints as **design parameters**, not limitations.
 
 ---
 
-## 3. End-to-End Pipeline
-
-### Conceptual Pipeline
-
-```
-Raw Energy Consumption Data
-        ↓
-Data Cleaning & Validation
-        ↓
-Feature Engineering & Normalization
-        ↓
-Synthetic Data Augmentation
-        ↓
-LightGBM Model Training
-        ↓
-Model Persistence (joblib)
-        ↓
-Prediction, Analysis & Visualization
-```
-
-### Pipeline Diagram
+## 🧠 3. Phased System Architecture (Primary Contribution)
 
 ```mermaid
 flowchart TD
-    A[Raw Energy Data] --> B[Data Cleaning & Validation]
+    A[Phase 1: Prepaid AI Layer] --> B[Phase 2: Utility Integration Layer]
+    B --> C[Phase 3: IoT & Edge Control Layer]
+```
+
+### Phase 1 – Prepaid AI Layer (Implemented)
+- Requires **no smart meters**
+- Uses prepaid purchase and consumption patterns
+- Provides:
+  - Consumption forecasting
+  - Credit depletion timelines
+  - Budget planning support
+
+### Phase 2 – Utility Integration Layer (Proposed)
+- Integrates smart meter APIs where available
+- Enables:
+  - Real-time grid forecasting
+  - Loss and anomaly detection
+  - Regional energy benchmarking
+
+### Phase 3 – IoT & Autonomous Control (Proposed)
+- Appliance-level telemetry
+- Automated demand response
+- Federated learning to preserve privacy
+
+---
+
+## 🔁 4. Phase 1 Internal ML Pipeline
+
+```mermaid
+flowchart LR
+    A[Prepaid & Grid Data] --> B[Cleaning & Validation]
     B --> C[Feature Engineering]
-    C --> D[Synthetic Data Augmentation]
-    D --> E[LightGBM Training]
-    E --> F[Persisted Models]
-    F --> G[Energy Forecasting]
-    G --> H[Visualization & Decision Support]
+    C --> D[LightGBM Models]
+    D --> E[Forecast Outputs]
+    E --> F[User & Utility Decision Support]
 ```
 
----
-
-## 4. Data Engineering Strategy
-
-### Data Characteristics
-- Historical energy consumption records  
-- User-level and grid-level attributes  
-- Temporal and load-related features  
-
-### Preprocessing Steps
-- Missing value handling  
-- Feature scaling and normalization  
-- Outlier management  
-- Synthetic data generation  
-- Temporal train–test splitting  
-
-Synthetic data augmentation mitigates **data sparsity**, a common limitation in energy datasets.
+This pipeline ensures **robust prediction under uncertainty**, a defining characteristic of prepaid systems.
 
 ---
 
-## 5. Machine Learning Methodology
+## 🧪 5. Data Strategy & Synthetic Data Generation
 
-### Model Selection: LightGBM (LGBM)
+### 5.1 Utility-Level Data
+- Eskom residual demand dataset
+- 43,824 hourly observations
+- Captures national load dynamics
 
+### 5.2 Synthetic Consumer Modeling
+Due to the unavailability of real prepaid household data, SEMS introduces a **stochastic data synthesis framework**:
+
+\[
+U_{i,t} = \alpha_i \cdot D_t \cdot \beta_t \cdot \gamma_i
+\]
+
+Where:
+- \( \alpha_i \): baseline user consumption
+- \( D_t \): normalized grid demand
+- \( \beta_t \): temporal volatility
+- \( \gamma_i \): user-specific noise
+
+```mermaid
+flowchart TD
+    A[Grid Demand Data] --> B[Normalization]
+    B --> C[User Baseline Sampling]
+    C --> D[Temporal Volatility]
+    D --> E[Noise Injection]
+    E --> F[Synthetic Prepaid Dataset]
+```
+
+This approach preserves **statistical realism** while ensuring **privacy and scalability**.
+
+---
+
+## ⚙️ 6. Machine Learning Methodology
+
+### 6.1 Model Selection: LightGBM
 LightGBM was selected due to:
+- Superior performance on tabular energy data
+- Ability to model non-linear demand patterns
+- Fast training and low inference latency
+- Built-in feature importance for interpretability
 
-- Strong performance on structured data  
-- Efficient non-linear interaction modeling  
-- Low computational overhead  
-- Fast convergence  
-- High interpretability  
-
-These properties align with energy-sector requirements where **trust and explainability are essential**.
-
-### Training Strategy
-- Separate models for grid-level and user-level prediction  
-- Iterative experimentation in notebooks  
-- Empirical hyperparameter tuning  
-- Model persistence using `joblib`  
+### 6.2 Feature Engineering
+- Lagged consumption features (1, 24, 168)
+- Rolling averages (3, 24, 168)
+- Temporal encodings (hour, weekday, month)
+- Behavioral indicators (weekend vs weekday)
 
 ---
 
-## 6. Visualization & Insight
+## 📊 7. Model Evaluation & Results
 
-The project includes visualization-enabled notebooks providing:
+| Forecast Level | MAE | RMSE | R² |
+|---------------|-----|------|----|
+Grid-Level | 217 MW | 342 MW | 0.9885 |
+Consumer-Level | 189 kWh | 258 kWh | 0.9940 |
 
-- Consumption trend analysis  
-- Prediction vs actual comparison  
-- Feature importance interpretation  
-- Performance diagnostics  
-
-These support **human-in-the-loop decision-making**.
+Results demonstrate that **classical gradient boosting models** can achieve near state-of-the-art performance even in data-sparse environments.
 
 ---
 
-## 7. Repository Structure
+## 🚀 8. Deployment Architecture
 
+```mermaid
+flowchart LR
+    A[Trained Models (.joblib)] --> B[FastAPI Backend]
+    B --> C[REST APIs]
+    C --> D[Web / Mobile Interfaces]
+    C --> E[Utility Dashboards]
 ```
-SEMS/
-│
+
+The system is designed for **cloud-native deployment**, with minimal infrastructure requirements.
+
+---
+
+## 📁 9. Repository Structure
+
+```text
+Smart-Energy-Management-System/
 ├── notebooks/
-├── joblib_models/
-├── Data/
-├── Docs/
+├── data/
+├── models/
+├── api/
+├── docs/
+├── requirements.txt
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 8. Running the Project
+## 🌍 10. Societal & Sustainability Impact
 
-```bash
-pip install lightgbm pandas numpy matplotlib scikit-learn joblib
-jupyter notebook
-```
-
----
-
-## 9. Practical Applications
-
-- Smart grids  
-- Residential and industrial energy monitoring  
-- Load forecasting and peak demand management  
-- Sustainability and carbon-reduction planning  
-- Policy-driven energy analytics  
+- Supports energy access planning
+- Reduces energy poverty through better budgeting
+- Improves utility forecasting accuracy
+- Aligns with sustainable development goals
 
 ---
 
-## 10. Engineering Contribution
+## 🔮 11. Future Research Directions
 
-This project demonstrates that:
-
-- Classical ML remains highly effective for energy forecasting  
-- Synthetic data improves robustness  
-- Explainability is critical for adoption  
-- Engineering discipline outperforms model hype  
-
----
-
-## 11. Future Enhancements
-
-- IoT integration  
-- Real-time streaming prediction  
-- Reinforcement learning for load optimization  
-- Carbon footprint estimation  
-- Web-based energy dashboards  
+- Integration with live prepaid systems
+- IoT-enabled demand response
+- Federated learning across communities
+- Explainability via SHAP and counterfactuals
+- Carbon-aware load optimization
 
 ---
 
-## Author
+## 👤 12. Author
 
 **Kupakwashe T. Mapuranga**  
 M.Tech – Artificial Intelligence & Machine Learning  
+Symbiosis Institute of Technology
 
-Focus Areas:
+Research Interests:
 - Sustainable AI Systems  
 - Energy Informatics  
-- Applied Machine Learning for Decision Support
-=======
-# Smart-Energy-Management-Sysytem
- 
+- Data-Sparse Machine Learning  
+- Edge & Federated AI  
+
+---
+
+## 📜 13. Citation
+
+If you reference this work:
+
+Mapuranga, K. T. (2026). *Phased AI-Driven Energy Management: From Data-Sparse Forecasting to IoT-Enabled Control in Sub-Saharan Africa.*
