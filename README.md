@@ -1,3 +1,4 @@
+
 # Smart Energy Management System (SEMS)
 ## Predictive Energy Analytics using Machine Learning
 
@@ -198,3 +199,6 @@ Focus Areas:
 - Sustainable AI Systems  
 - Energy Informatics  
 - Applied Machine Learning for Decision Support
+=======
+# Smart-Energy-Management-Sysytem
+ 
