@@ -94,15 +94,18 @@ This pipeline ensures **robust prediction under uncertainty**, a defining charac
 ### 5.2 Synthetic Consumer Modeling
 Due to the unavailability of real prepaid household data, SEMS introduces a **stochastic data synthesis framework**:
 
-\[
+$$
 U_{i,t} = \alpha_i \cdot D_t \cdot \beta_t \cdot \gamma_i
-\]
+$$
+
 
 Where:
-- \( \alpha_i \): baseline user consumption
-- \( D_t \): normalized grid demand
-- \( \beta_t \): temporal volatility
-- \( \gamma_i \): user-specific noise
+
+- \( \alpha_i \): baseline user consumption  
+- \( D_t \): normalized grid demand  
+- \( \beta_t \): temporal volatility  
+- \( \gamma_i \): user-specific noise  
+
 
 ```mermaid
 flowchart TD
@@ -147,13 +150,17 @@ Results demonstrate that **classical gradient boosting models** can achieve near
 
 ## 🚀 8. Deployment Architecture
 
-```mermaid
 flowchart LR
-    A[Trained Models (.joblib)] --> B[FastAPI Backend]
-    B --> C[REST APIs]
-    C --> D[Web / Mobile Interfaces]
+    A[Trained Models] --> B[API Service]
+    B --> C[REST Endpoints]
+    C --> D[Web Clients]
     C --> E[Utility Dashboards]
-```
+
+**Deployment Notes**
+- Models serialized using `joblib`
+- API implemented using FastAPI
+- REST-based inference endpoints
+
 
 The system is designed for **cloud-native deployment**, with minimal infrastructure requirements.
 
