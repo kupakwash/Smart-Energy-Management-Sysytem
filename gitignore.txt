@@ -1,0 +1,21 @@
+# Python environments
+.venv/
+env/
+
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Model artifacts (optional)
+*.joblib
